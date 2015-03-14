@@ -28,7 +28,7 @@ If the exponents are too large to be packed, then the code should raise an excep
 
 The integer arithmetic, the coefficients of the monomials, must be very fast. This can be done using our very own fast machine integers for small integers and then switch to GMP for large integers.This will be applied for all CSymPy integers, which should speed things up considerably.
  
-The hashtable should be tailored for this purpose, so we can store the values directly in the array for one value and a linked list for more than one value. Also, there is a trick to use a 1:1 hash function, Piranha uses that.
+The hashtable should be tailored for this purpose, so we can store the values directly in the array for one value and a linked list for more than one value. Also, there is a trick to use a 1:1 hash function, [Piranha](https://github.com/bluescarni/piranha) uses that.
    
 Polynomials with rational(or even extensions for symbols) coefficients and probably rational exponents also needs to be thought of.
 
