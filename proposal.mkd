@@ -55,8 +55,9 @@ Note: Multiplying the above two polynomials i.e. `f*g` is planned to returned `(
 	  and not `3*x**5 + 6*x**3 + 2*x**2 + 4` by default but there will be a method `expand()` which will return this on 
 	 `expand(f*g)`.  
 
-Given `Polynomial A = a_0 + a_1*x + ... + a_(n-1)*x**{n-1};`<br/>
-	  `Polynomial B = b_0 + b_1*x + ... + b_(n-1)*x**{n-1};`<br/>
+Given<br/>
+ 	`Polynomial A = a_0 + a_1*x + ... + a_(n-1)*x**{n-1};`<br/>
+ 	`Polynomial B = b_0 + b_1*x + ... + b_(n-1)*x**{n-1};`<br/>
 Then computing the convolution of A and B can be done by straightforward computation in O(n^2) time, Karatsuba in O(n^(1.58..)) we'll use FFTs to do in O(n log n) time. This is then used in Schonhage-Strassen integer multiplication algorithm that multiplies two n-bit integers in O(n log n loglog n) time. I am only going to do polynomial multiplication with FFT.
 Note: After analysing the cut-off sizes Schonhage-Strassen integer multiplication we can decide whether to use this method for our very own integer implementation or not.
 
