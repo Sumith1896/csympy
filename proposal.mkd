@@ -10,25 +10,23 @@ Github/IRC: [Sumith1896](https://github.com/Sumith1896)
 
 #The Project
 ##Overview
-CSymPy currently lacks a polynomial module which is very essential in achieving CSymPy's goal of being the fastest CAS ever. Having a polynomial module is a core concern and implementing a fast module also help in achieving a fast series module. We can use Piranha, but it has complicated code and does not compile with old compilers. My aim is to implement a sparse polynomial module in CSymPy itself.
+CSymPy currently lacks a polynomial module which is very essential in achieving CSymPy's goal of being the fastest CAS ever. Having a polynomial module is a core concern and implementing a fast module also help in achieving a fast series module. We can use [Piranha polynomial module](https://github.com/bluescarni/piranha/blob/master/src/polynomial.hpp), but it has complicated code and does not compile with old compilers. My aim is to implement a sparse polynomial module in CSymPy itself.
 
 ##Why this project?
 Mathematics is pretty close to me and that's why it's CSymPy that I choose to work under. The discussion about algorithms,methods, benchmarks, speed, etc. that happen in the community is really engaging and enriching. With this project and introduction of new modules in CSymPy will allow it to explore new possiblities of CAS speeds and also at the same time being compatible as a optional fast SymPy core. 
 
 ##Summary of discussions
-*Can be skipped, this was kept for my reference.*
 SymPy uses sparse polys, the sparse polys use a tuple of ints to represent the power in monomials. Then you have a dictionary (hashtable) where you simply store the coefficients.<br/>
 Example: `7*x*y + 3*z**3` is stored as dict - `{(1, 1, 0): 7, (0, 0, 3):3}`
 
-The exponents however can be packed into one integer using Kronecker substitution currently unimplemented even in SymPy which I plan to implement in both SymPy and CSymPy as you can use upto 64 bit integer(or _int128 of C++) and each coefficient requires just 8 bits, hence packing is possible. Then you use that integer as the key in the hashtable/dictionary to speed up things. Also, multiplying two monomials then just becomes adding the ints of exponents, etc. 
-But problems can arise when two monomials are multiplied and there is overflow. To overcome this we can use a guard bit
-which gets switched to 1 then an overflow error can be raised and convert from packed structure to tuple. 
+The exponents however can be packed into one integer using Kronecker substitution currently unimplemented even in SymPy which I plan to implement in both SymPy and CSymPy as you can use upto 64 bit integer(or _int128 of C++) and number of bits that each exponent requires will be decided on the number of variables, hence packing is possible. Then you use that integer as the key in the hashtable/dictionary to speed up things. Also, multiplying two monomials then just becomes adding the ints of exponents, etc.<br/>
+But problems can arise when two monomials are multiplied and there is overflow across bits. To overcome this we check before the operation that the result will fit or not. If not we can convert from packed structure to tuple. Another idea was to use a guard bit which gets switched to 1 then an overflow error is raised but this idea was discarded as this reduces the number of bits per variable. 
 
 If the exponents are too large to be packed, then the code should raise an exception, the user then needs to use the tuple representation using either std::vector<int> in C++, though std::array is faster, as std::vector is allocating on heap, or a faster vector implementation that uses static allocation.
 
 The integer arithmetic, the coefficients of the monomials, must be very fast. This can be done using our very own fast machine integers for small integers and then switch to GMP for large integers.This will be applied for all CSymPy integers, which should speed things up considerably.
  
-The hashtable should be tailored for this purpose, so we can store the values directly in the array for one value and a linked list for more than one value. Also, there is a trick to use a 1:1 hash function, [Piranha](https://github.com/bluescarni/piranha) uses that.
+The hashtable should be tailored for this purpose, so we can store the values directly in the array for one value and a linked list for more than one value. Also, there is a trick to use a 1:1 hash function, [Piranha](https://github.com/bluescarni/piranha) uses that. Usage in Piranha, [here](https://github.com/bluescarni/piranha/blob/master/src/hash_set.hpp).
    
 Polynomials with rational(or even extensions for symbols) coefficients and probably rational exponents also needs to be thought of.
 
@@ -41,7 +39,7 @@ I plan to do a sparse implementation of polynomial module. The following steps w
 
 SymPy currently does not have exponent packing which also can be implemented to gain speed.
 
-The end implementation of polynomial module for CSymPy should be working atleast as fast as Piranha if not faster.
+The end implementation of polynomial module for CSymPy should be working atleast as fast as [Piranha polynomial implementation](https://github.com/bluescarni/piranha/blob/master/src/polynomial.hpp) if not faster.
 The series expansion should then be implemented using it. That will provide optimal speed.
 In addition to this the following implementations are planned in the CSymPy polynomial module
 
@@ -55,7 +53,12 @@ Polynomial g = x**2 + 2;
 ```
 Note: Multiplying the above two polynomials i.e. `f*g` is planned to returned `(3*x**3 + 2)*(x**2 + 2)` 
 	  and not `3*x**5 + 6*x**3 + 2*x**2 + 4` by default but there will be a method `expand()` which will return this on 
-	 `expand(f*g)`.
+	 `expand(f*g)`.  
+
+Given Polynomial A = a_0 + a_1*x + ... + a_(n-1)*x**{n-1};
+	  Polynomial B = b_0 + b_1*x + ... + b_(n-1)*x**{n-1};
+Then computing the convolution of A and B can be done by straightforward computation in O(n^2) time,  Karatsuba in n^{1.58..} we'll use FFTs to do in O(n log n) time. This is then used in Schonhage-Strassen integer multiplication algorithm that multiplies two n-bit integers in O(n log n loglog n) time. I am only going to do polynomial multiplication with FFT.
+Note: After analysing the cut-off sizes Schonhage-Strassen integer multiplication we can decide whether to use this method for our very own integer implementation or not.
 
 ###Division
 Division between two polynomials f, g gives quotient q and remainder r. There will be two functions for each of them, that take two polynomial arguments and returns a polynomial.
@@ -69,46 +72,6 @@ Here, `q = 3*x` and `r = -6*x + 2` and `f = g*q + r` is satisfied with degree of
 With division, GCD and LCM of univariate and multivariate polynomial can be computed. The point to be noted here is that if the polynomial has integer coefficients then gcd of coefficients is also considered else the polynomial returned is monic.<br/>
 Method: `gcd()` for GCD and `lcm()` for LCM.<br/>
 Example: `gcd(12*x**2, 4*x)` returns `4*x` while `gcd((1/3)*x**2, (1/2)*x)` returns `x`.
-
-###Factorization
-Factorization of univariate and multivariate polynomials with rational coefficients should be possible.
-```
-Polynomial a = factor(expand(f*g));
-```
-Here, a will be equal to `(3*x**3 + 2)*(x**2 + 2)`.
-The other deliverables will be:
-* **Square-free factorisation**
-	The square-free factorization is much easier to compute than the complete factorization into irreducible factors, and is thus often preferred when the complete factorization is not really needed, like for the partial fraction decomposition and the symbolic integration of rational fractions. Square-free factorization is the first step of the polynomial factorization algorithms which are implemented in computer algebra systems.<br/>
-	Method: `sqf(const Polynomial &)`
-
-* **Factoring in terms of cyclotomic polynomials**
-	To decompose polynomials of the form `x**n + 1` or `x**n - 1` in terms of cyclotomic polynomials.<br/>
-	Method: `factor(const Polynomial &)`, with polynomial of given form.
-
-* **Expanded factorisation including complex numbers**
-	This obtain factorization over complex numbers.<br/>
-	Method: `efactor(const Polynomial &)`<br/>
-	Example: `efactor(2*x**2 + 2)` returns `2*(x - I)*(x + I)` while `factor(2*x**2 + 2)` returns `2*(x**2 + 1)`.
-
-
-Note: `factor()` (as of now, is subject to change) will return a dictionary of polynomials and their exponents(the       implementation needs some thought).<br/>
-Example: `Polynomial a = 2*x**2 + 5*x**3 + 4*x**4 + x**5;`, `factor(a)` is `x**2*(x + 1)**2*(x + 2)` so we need to return the structure `([(x, 2), (x + 1, 2), (x + 2, 1)])`.
-
-###Groebner bases
-A Gröbner basis G for a system of polynomials A is an equivalence system that possesses useful properties. Furthermore, the set of polynomials in a Gröbner basis have the same collection of roots as the original polynomials. For linear functions in any number of variables, a Gröbner basis is equivalent to Gaussian elimination.
-The algorithm for computing Gröbner bases is known as Buchberger's algorithm. Calculating a Gröbner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed.
-Buchberger's algorithm can be viewed as a generalization of the Euclidean algorithm for univariate GCD computation and of Gaussian elimination for linear systems.<br/>
-
-Method: Given an array of polynomial, `groebner()` returns an array of Groebner Basis.
-
-###Polynomial roots
-Methods to find the roots(real, complex or symbolic) of univariate polynomials and to solve polynomial systems.
-Will return a k cross n array where n is the number of variables and k is the number of solutions.
-
-`Polynomial h = x**2 - 4;`, then `solve(f);` returns [2]x[1] array.<br/>
-`Polynomial s[2] = {(x + y - 6), (−3x + y - 2)};` then `solve(s);` returns [1]x[2] array.
-
-Note: All polynomials of degree 5 and lesser can be solved (provided some conditions on degree equal to 5). For higher 		  polynomials, other methods need to be applied but solution is not guaranteed.
 
 ###Derivative
 Differention of polynomials with respect symbols will be useful and easy to implement feature.
@@ -137,22 +100,119 @@ CSymPy benchmark system can be improved a lot and I plan to implement benchmarks
 This will help in testing it against other CAS. Eventually CSymPy aims to be the fastest and good benchmarks will be necessary. Also this vs Pynac, if positive, can be convincing to replace Sage's core.<br/>
 Note: If a better source of great benchmark is suggested, then those will be implemented. The these can be implemented atleast as examples.
 
-###TODO
+**If time permits the following will be implemented, how much will depend on the time that remains, else
+I will implement them after GSoC period**
+###Factorization
+Factorization of univariate and multivariate polynomials with rational coefficients should be possible.
+```
+Polynomial a = factor(expand(f*g));
+```
+Here, a will be equal to `(3*x**3 + 2)*(x**2 + 2)`.
+The other deliverables will be:
+* **Square-free factorisation**
+	The square-free factorization is much easier to compute than the complete factorization into irreducible factors, and is thus often preferred when the complete factorization is not really needed, like for the partial fraction decomposition and the symbolic integration of rational fractions. Square-free factorization is the first step of the polynomial factorization algorithms which are implemented in computer algebra systems.<br/>
+	Method: `sqf(const Polynomial &)`
+
+* **Factoring in terms of cyclotomic polynomials**
+	To decompose polynomials of the form `x**n + 1` or `x**n - 1` in terms of cyclotomic polynomials.<br/>
+	Method: `factor(const Polynomial &)`, with polynomial of given form.
+
+* **Expanded factorisation including complex numbers**
+	This obtain factorization over complex numbers.<br/>
+	Method: `efactor(const Polynomial &)`<br/>
+	Example: `efactor(2*x**2 + 2)` returns `2*(x - I)*(x + I)` while `factor(2*x**2 + 2)` returns `2*(x**2 + 1)`.
+
+Note: `factor()` (as of now, is subject to change) will return a dictionary of polynomials and their exponents(the       implementation needs some thought).<br/>
+Example: `Polynomial a = 2*x**2 + 5*x**3 + 4*x**4 + x**5;`, `factor(a)` is `x**2*(x + 1)**2*(x + 2)` so we need to return the structure `([(x, 2), (x + 1, 2), (x + 2, 1)])`.<br/>
+Time required: 2 weeks 
+
+###Groebner bases
+A Gröbner basis G for a system of polynomials A is an equivalence system that possesses useful properties. Furthermore, the set of polynomials in a Gröbner basis have the same collection of roots as the original polynomials. For linear functions in any number of variables, a Gröbner basis is equivalent to Gaussian elimination.
+The algorithm for computing Gröbner bases is known as Buchberger's algorithm. Calculating a Gröbner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed.
+Buchberger's algorithm can be viewed as a generalization of the Euclidean algorithm for univariate GCD computation and of Gaussian elimination for linear systems.<br/>
+
+Method: Given an array of polynomial, `groebner()` returns an array of Groebner Basis.<br/>
+Time required: 1 week.
+
+###Polynomial roots
+Methods to find the roots(real, complex or symbolic) of univariate polynomials and to solve polynomial systems.
+Will return a k cross n array where n is the number of variables and k is the number of solutions.
+
+`Polynomial h = x**2 - 4;`, then `solve(f);` returns [2]x[1] array.<br/>
+`Polynomial s[2] = {(x + y - 6), (−3x + y - 2)};` then `solve(s);` returns [1]x[2] array.
+
+Note: All polynomials of degree 5 and lesser can be solved (provided some conditions on degree equal to 5). For higher 		  polynomials, other methods need to be applied but solution is not guaranteed.<br/>
+Time required: 1 week
+
 ##Implementation details
+###TODO
 
 ##Timeline
 
+###Pre-GSoC
+* Do an audit of [Piranha](https://github.com/bluescarni/piranha). Clear doubts, if any, with author [Francesco Biscani](https://github.com/bluescarni) or [Ondřej](https://github.com/bluescarni).
+* Try out Piranha, look into the integer and hashtable implementation. Go through the polynomial implementation.
+
 ###Community Bonding
+With help of the mentor,
+* Get the small integer implementation working as per needs.
+* Get the faster hashtable working as per needs.
+* Chalk out all details of implementation and decide on undecided areas of proposal/implementation possible.
 
-###Week 1-4
+###Week 1
+Implement a basic polynomial structure, which uses GMP working, with Kronecker substitution with add and subtract methods.
 
-###Week 5-8
+###Week 2
+* Update the polynomial structure which uses the new integer for small coefficients and switches to GMP for large.
+* First the implementation and tests can be carried out for monomials. 
 
-###Week 9-12
+###Week 3
+* For multiplication of two monomials, check before the operation that the result will fit or not in packed structure.
+* When it does not fit, implement a method to convert from packed structure to tuple
+* Update the polynomial structure to use this.
 
-###Week 13 
+###Week 4
+* Implement benchmarks for the polynomial module.
+* Test it against various other CAS polynomial like Piranha, Pynac.
+* Check out the areas where improvement is possible.
+
+###Week 5
+* Experiment with the implementation, possible tweaking of integer/hashtable implementation will be needed.
+* Benchmark and get it working atleast as fast as Piranha if not faster.
+
+###Week 6
+* Implement the division for polynomial module.
+* Two methods `quotient()` and `remainder()` will be implemented.
+
+###Week 7
+* Implement the two methods `gcd()` and `lcm()`. 
+
+###Week 8
+* Implementation of method `cancel()`.<br/>
+Note: The time taken for this may extend more than a week. The exact time taken for this will be decided once implementation details are worked out.
+
+###Week 9
+* Implement method `apart()` for decomposition of partial fraction.
+
+###Week 10
+* Implement derivative in polynomial. This should take less than a weeks time.
+* Extend the polynomial benchmarks for the recent methods.
+
+###Week 11
+* Extend the CSymPy benchmarks for other modules.
+
+###Week 12
+* Polynomial documentation will be done. Try and get the PRs merged in case they haven't.
+
+###Week 13
+A buffer week. In case there are some unimplemented details/TODO's, try to finish them off this week.
 
 ###Post GSoC
+As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy and SymPy in general. Post GSoC, I have the following plans.
+* CSymPy is planned to be a optional fast SymPy core. I want ot be part of the team when SymPy is supplied with optional CSymPy.
+* CSymPy has also the chances of being a bigger thing than SymPy itself in the CAS competition. For that the documentation has to be expanded and code needs organization into modules.
+* I had gone through the extensive reading period for implementation of solvers in CSymPy which I plan to do in future.<br/>
+and hopefully many more interesting things.
 
 ##References
 1. Gitter discussions with [@certik](https://github.com/certik) and [@shivamvats](https://github.com/shivamvats)
