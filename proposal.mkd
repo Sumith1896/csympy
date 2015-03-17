@@ -182,31 +182,31 @@ Implement a basic polynomial structure, which uses GMP working, with Kronecker s
 * Benchmark and get it working atleast as fast as Piranha if not faster.
 
 ###Week 6
+* Implement polynomials with rational and symbolic coefficients and exponents.
+
+###Week 7
+* Implement our very own fast integer for all CSymPy for speed.
+
+###Week 8
 * Implement the division for polynomial module.
 * Two methods `quotient()` and `remainder()` will be implemented.
 
-###Week 7
+###Week 9
 * Implement the two methods `gcd()` and `lcm()`. 
 
-###Week 8
+###Week 10
 * Implementation of method `cancel()`.<br/>
 Note: The time taken for this may extend more than a week. The exact time taken for this will be decided once implementation details are worked out.
 
-###Week 9
+###Week 11
 * Implement method `apart()` for decomposition of partial fraction.
 
-###Week 10
-* Implement derivative in polynomial. This should take less than a weeks time.
-* Extend the polynomial benchmarks for the recent methods.
-
-###Week 11
-* Extend the CSymPy benchmarks for other modules.
-
 ###Week 12
-* Polynomial documentation will be done. Try and get the PRs merged in case they haven't.
+* Implement derivative in polynomial. This should take less than a weeks time.
+* Start with the polynomial documentation.
 
 ###Week 13
-A buffer week. In case there are some unimplemented details/TODO's, try to finish them off this week.
+A buffer week. Try and get the PRs merged. In case there are some unimplemented details/TODO's, try to finish them off this week.
 
 ###Post GSoC
 As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy and SymPy in general. Post GSoC, I have the following plans.
