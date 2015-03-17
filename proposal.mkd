@@ -158,10 +158,10 @@ Time required: 1 week
 With help of the mentor,
 * Get the small integer implementation working as per needs.
 * Get the faster hashtable working as per needs.
-* Chalk out all details of implementation and decide on undecided areas of proposal/implementation possible.
+* Chalk out all details of implementation and decide on undecided areas of proposal/implementation possible such as implementation of rational and symbolic coefficients/exponents.
 
 ###Week 1
-Implement a basic polynomial structure, which uses GMP working, with Kronecker substitution with add and subtract methods.
+* Implement a basic polynomial structure, which uses GMP working, with Kronecker substitution with add and subtract methods.
 
 ###Week 2
 * Update the polynomial structure which uses the new integer for small coefficients and switches to GMP for large.
@@ -206,7 +206,7 @@ Note: The time taken for this may extend more than a week. The exact time taken 
 * Start with the polynomial documentation.
 
 ###Week 13
-A buffer week. Try and get the PRs merged. In case there are some unimplemented details/TODO's, try to finish them off this week.
+* A buffer week. Try and get the PRs merged. In case there are some unimplemented details/TODO's, try to finish them off this week.
 
 ###Post GSoC
 As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy and SymPy in general. Post GSoC, I have the following plans.
