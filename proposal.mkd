@@ -212,7 +212,7 @@ Note: The time taken for this may extend more than a week. The exact time taken 
 As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy and SymPy in general. Post GSoC, I have the following plans.
 * CSymPy is planned to be a optional fast SymPy core. I want ot be part of the team when SymPy is supplied with optional CSymPy.
 * CSymPy has also the chances of being a bigger thing than SymPy itself in the CAS competition. For that the documentation has to be expanded and code needs organization into modules.
-* I had gone through the extensive reading period for implementation of solvers in CSymPy which I plan to do in future.<br/>
+* I had gone through the extensive reading period for implementation of solvers in CSymPy which I plan to do in future once it is well figured out in SymPy.<br/>
 and hopefully many more interesting things.
 
 ##References
