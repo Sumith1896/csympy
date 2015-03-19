@@ -15,7 +15,7 @@ CSymPy currently lacks a polynomial module which is very essential in achieving 
 ##Why this project?
 Mathematics is pretty close to me and that's why it's CSymPy that I choose to work under. The discussion about algorithms,methods, benchmarks, speed, etc. that happen in the community is really engaging and enriching. With this project and introduction of new modules in CSymPy will allow it to explore new possiblities of CAS speeds and also at the same time being compatible as a optional fast SymPy core. 
 
-##Summary of discussions
+##Summary of discussions[1]
 SymPy uses sparse polys, the sparse polys use a tuple of ints to represent the power in monomials. Then you have a dictionary (hashtable) where you simply store the coefficients.<br/>
 Example: `7*x*y + 3*z**3` is stored as dict - `{(1, 1, 0): 7, (0, 0, 3):3}`
 
@@ -92,7 +92,7 @@ Example: `cancel((x - 1)/(x**2 - 1))` returns `1/(x + 1)`.
 Example: `apart(1/(x**2 + 3*x +2))` returns `1/(x + 1) - 1/(x + 2)`.
 
 ##The benchmarks
-CSymPy benchmark system can be improved a lot and I plan to implement benchmarks from Wester's article (or from any other source, suggestions welcome). The section H of this article has problems related to algebra and selected ones can be added to benchmark the implemented polynomial module. If time permits, the following sections can also be added:
+CSymPy benchmark system can be improved a lot and I plan to implement benchmarks from Wester's article[2] (or from any other source, suggestions welcome). The section H of this article has problems related to algebra and selected ones can be added to benchmark the implemented polynomial module. If time permits, the following sections can also be added:
 * C. Numbers<br/>
 * G. Number theory<br/>
 * I. Trigonometry<br/>
@@ -155,10 +155,11 @@ Time required: 1 week
 * Try out Piranha, look into the integer and hashtable implementation. Go through the polynomial implementation.
 
 ###Community Bonding
-With help of the mentor,
-* Get the small integer implementation working as per needs.
-* Get the faster hashtable working as per needs.
-* Chalk out all details of implementation and decide on undecided areas of proposal/implementation possible such as implementation of rational and symbolic coefficients/exponents.
+* Chalk out all details of implementation and decide on undecided areas of proposal/implementation possible such as implementation of rational and symbolic coefficients/exponents.<br/>
+Work with mentor and implement
+* Small integer implementation.
+* The faster hashtable implementation.
+Enough understanding of implementation should be gained so that tweaking as per needs is possible in the future.
 
 ###Week 1
 * Implement a basic polynomial structure, which uses GMP working, with Kronecker substitution with add and subtract methods.
@@ -171,6 +172,7 @@ With help of the mentor,
 * For multiplication of two monomials, check before the operation that the result will fit or not in packed structure.
 * When it does not fit, implement a method to convert from packed structure to tuple
 * Update the polynomial structure to use this.
+* Send in a PR.
 
 ###Week 4
 * Implement benchmarks for the polynomial module.
@@ -180,12 +182,15 @@ With help of the mentor,
 ###Week 5
 * Experiment with the implementation, possible tweaking of integer/hashtable implementation will be needed.
 * Benchmark and get it working atleast as fast as Piranha if not faster.
+* Send in a PR.
 
 ###Week 6
 * Implement polynomials with rational and symbolic coefficients and exponents.
+* Send in a PR.
 
 ###Week 7
 * Implement our very own fast integer for all CSymPy for speed.
+* Send in a PR.
 
 ###Week 8
 * Implement the division for polynomial module.
@@ -193,6 +198,7 @@ With help of the mentor,
 
 ###Week 9
 * Implement the two methods `gcd()` and `lcm()`. 
+* Send in a PR.
 
 ###Week 10
 * Implementation of method `cancel()`.<br/>
@@ -200,10 +206,12 @@ Note: The time taken for this may extend more than a week. The exact time taken 
 
 ###Week 11
 * Implement method `apart()` for decomposition of partial fraction.
+* Send in a PR.
 
 ###Week 12
 * Implement derivative in polynomial. This should take less than a weeks time.
-* Start with the polynomial documentation.
+* Work on the polynomial documentation.
+* Send in a PR.
 
 ###Week 13
 * A buffer week. Try and get the PRs merged. In case there are some unimplemented details/TODO's, try to finish them off this week.
