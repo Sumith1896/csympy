@@ -42,7 +42,7 @@ SymPy has a very interesting codebase which I started exploring parallel to that
 
 3. [PR 9069](https://github.com/sympy/sympy/pull/9069): (Pending) Fixed multiplicity(n, 0) from hitting endless recursion which also led log(0, n) to endless recursion.
 
-4. [Issue 8996](https://github.com/sympy/sympy/issues/8996): Printing out integral for non-convegent integral.
+4. [Issue 8996](https://github.com/sympy/sympy/issues/8996): Printing out integral for non-convergent integral.
 
 #The Project
 ##Overview
