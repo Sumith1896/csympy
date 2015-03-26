@@ -228,8 +228,8 @@ h = 779*x**6 + 1874*x**5 + 3735*x**4 + 4540*x**3 + 3444*x**2 + 2132*x + 609
 In practice a power of two will substituted. We can use coefficients to determine a value of x that is a large enough power of two for that the coefficients of the product `f*g` to be read off from the binary representation of the product number.
 
 ###Division
-**division()**<br/>
-THe specialised `division()` implemented for two polynomials `f` and `g` will be declared as
+####division()
+The specialised `division()` implemented for two polynomials `f` and `g` will be declared as
 ```
 void division(const RCP<const Polynomial> &f,
     const RCP<const Polynomial> &g,
@@ -242,8 +242,8 @@ division(f, g, outArg(q), outArg(r));
 ```
 The algorithm will polynomial divison algorithm[[10](http://en.wikipedia.org/wiki/Polynomial_long_division)].
 
-**The generalized division algorithm**
-The implementation will be carried out same as the `reduced()` is implemented in SymPy[11](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)<br/>
+####The generalized division algorithm
+The implementation will be carried out same as the `reduced()` is implemented in SymPy[[11](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)]<br/>
 ```
 void reduced(const RCP<const Polynomial> &f,   //help change g and q to arrays
     const RCP<const Polynomial> &g,
