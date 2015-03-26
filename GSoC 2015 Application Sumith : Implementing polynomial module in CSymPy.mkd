@@ -278,7 +278,7 @@ For univariate polynomials, it returns a `Integer`.
 ```
 RCP<const Integer> value = f->eval(integer(3));
 ```
-Then `value` will be 83.<br/>
+Then `value` will be `integer(83)`.<br/>
 For multivariate polynomials, it returns a `Polynomial`, also the change in the input API
 ```
 RCP<const Polynomial> k = Poly(x*y**2 + y);
