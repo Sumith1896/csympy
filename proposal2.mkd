@@ -150,7 +150,7 @@ The point to be noted here is that if the polynomial has integer coefficients th
 The polynomial `k` will be `x**3*y**2 + x**2*y**3`.
 
 ###Square-free decomposition
-Given a polynomial f, square–free decomposition(factorization)[2](http://en.wikipedia.org/wiki/Square-free_polynomial)  of f gives a list of polynomials (factors) `f_1, f_2... f_n`, such that all pairs of polynomials `(f_i, f_j)`, for i not equal to j, are co–prime, and `f = f_1*f_2^2*...*f_n^n`. Thus each `f_i` has no repeated roots. Note that square–free decomposition does not give a true factorization into irreducibles, although is a very important step in any factorization algorithm.<br/>
+Given a polynomial f, square–free decomposition(factorization)[[2](http://en.wikipedia.org/wiki/Square-free_polynomial)]  of f gives a list of polynomials (factors) `f_1, f_2... f_n`, such that all pairs of polynomials `(f_i, f_j)`, for i not equal to j, are co–prime, and `f = f_1*f_2^2*...*f_n^n`. Thus each `f_i` has no repeated roots. Note that square–free decomposition does not give a true factorization into irreducibles, although is a very important step in any factorization algorithm.<br/>
 There will be an unordered map defined from `Polynomial` to `Integer` which will be returned or the `umap_basic_num` can be used.<br/>
 Example: For
 ```
@@ -161,20 +161,20 @@ cout<<d;
 the printed otuput will be `{x + 2 : 1, x : 2, x + 1 : 2}`.
 
 ##The benchmarks
-CSymPy benchmark system can be improved a lot and I plan to implement benchmarks from Wester's article(or from any other source, suggestions welcome)[3](http://www.math.unm.edu/~wester/cas/book/Wester.pdf). The section H of this article has problems related to algebra and selected ones can be added to benchmark the implemented polynomial module. If time permits, the following sections can also be added:
+CSymPy benchmark system can be improved a lot and I plan to implement benchmarks from Wester's article(or from any other source, suggestions welcome)[[3](http://www.math.unm.edu/~wester/cas/book/Wester.pdf)]. The section H of this article has problems related to algebra and selected ones can be added to benchmark the implemented polynomial module. If time permits, the following sections can also be added:
 * C. Numbers<br/>
 * G. Number theory<br/>
 * I. Trigonometry<br/>
 * K. Complex Domain so on.<br/>
 
-This will help in testing it against other CAS. Eventually CSymPy aims to be the fastest and good benchmarks will be necessary. Also this vs Pynac, if positive, can be convincing to replace Sage's core[4](https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion).<br/>
+This will help in testing it against other CAS. Eventually CSymPy aims to be the fastest and good benchmarks will be necessary. Also this vs Pynac, if positive, can be convincing to replace Sage's core[[4](https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion)].<br/>
 Note: If a better source of great benchmark is suggested, then those will be implemented. These can then be implemented as examples.
 
 **If the above are successfully completed and if time permits, a basic implementation of Groebner bases will be done, highlighting the power of the newly implemented polynomial module**<br>
 
 ###Groebner bases
-The method of Groebner bases[5](http://en.wikipedia.org/wiki/Gr%C3%B6bner_basis) is a powerful technique for solving problems in commutative algebra. Groebner bases provide a uniform approach for solving problems that can be expressed in terms of systems of multivariate polynomial equations. It has many practical applications.<br/>
-Calculating a Groebner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed. The algorithm used for computation is Buchberger's algorithm[6](http://en.wikipedia.org/wiki/Buchberger%27s_algorithm)<br/>
+The method of Groebner bases[[5](http://en.wikipedia.org/wiki/Gr%C3%B6bner_basis)] is a powerful technique for solving problems in commutative algebra. Groebner bases provide a uniform approach for solving problems that can be expressed in terms of systems of multivariate polynomial equations. It has many practical applications.<br/>
+Calculating a Groebner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed. The algorithm used for computation is Buchberger's algorithm[[6](http://en.wikipedia.org/wiki/Buchberger%27s_algorithm)]<br/>
 Buchberger's algorithm can be viewed as a generalization of the Euclidean algorithm for univariate GCD computation and of Gaussian elimination for linear systems.<br/>
 The basic implementation is relatively simple to implement.<br/>
 ```
@@ -208,8 +208,8 @@ This way it is easier for us to judge the equality of former and latter expressi
 The selection of sorting is irrelevant (whether first by lexicographic order and then degree or vice versa) as long as the choice is consistent.<br/>
 
 ###Multiplication
-The `expand()` will be implemented will work on Mul when either of the parameters are polynomials. It will use Kronecker's substituion trick[7](http://en.wikipedia.org/wiki/Kronecker_substitution)[8](http://www.cs.berkeley.edu/~fateman/papers/polysbyGMP.pdf). Here polynomials with integer coefficients are encoded as sufficiently large integers and arithmetics are done using long integer arithmetics, and later results are converted back to polynomials. This is possible by using an isomorphism (a reversible transformation) between polynomials and integers. This algorithm will be efficient as we already have a fast integer arithmetics library.<br/>
-Example[9](http://web.maths.unsw.edu.au/~davidharvey/talks/kronecker-talk.pdf): Finding product of `f` and `g`, `h = f*g`
+The `expand()` will be implemented will work on Mul when either of the parameters are polynomials. It will use Kronecker's substituion trick[[7](http://en.wikipedia.org/wiki/Kronecker_substitution)][[8](http://www.cs.berkeley.edu/~fateman/papers/polysbyGMP.pdf)]. Here polynomials with integer coefficients are encoded as sufficiently large integers and arithmetics are done using long integer arithmetics, and later results are converted back to polynomials. This is possible by using an isomorphism (a reversible transformation) between polynomials and integers. This algorithm will be efficient as we already have a fast integer arithmetics library.<br/>
+Example[[9](http://web.maths.unsw.edu.au/~davidharvey/talks/kronecker-talk.pdf)]: Finding product of `f` and `g`, `h = f*g`
 ```
 f = 41*x**3 + 49*x**2 + 38*x + 29
 g = 19*x**3 + 23*x**2 + 46*x + 21
@@ -240,7 +240,7 @@ with usage as
 ```
 division(f, g, outArg(q), outArg(r));
 ```
-The algorithm will polynomial divison algorithm[10](http://en.wikipedia.org/wiki/Polynomial_long_division).
+The algorithm will polynomial divison algorithm[[10](http://en.wikipedia.org/wiki/Polynomial_long_division)].
 
 **The generalized division algorithm**
 The implementation will be carried out same as the `reduced()` is implemented in SymPy[11](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)<br/>
@@ -260,7 +260,7 @@ The implementation will be carried out on the same lines as that of SymPy's[11].
 When `expand()` of exponentiation i.e `f**n` where f is a `Polynomial` and n is an integer constant we apply the repeated squaring algorithm that has the complexity `O(log(n))`.
 
 ###Evaluation
-A well known algorithm for evaluating univariate polynomial is Horner’s scheme[12](http://en.wikipedia.org/wiki/Horner's_method), which is implemented in `eval()` method of SymPy's Poly class. This led significant improvement in execution times as compared to `subs()` method. The same algorithm will be implemented as it's an optimized algorithm for its task and it takes advantage over very fast integers.<br/>
+A well known algorithm for evaluating univariate polynomial is Horner’s scheme[[12](http://en.wikipedia.org/wiki/Horner's_method)], which is implemented in `eval()` method of SymPy's Poly class. This led significant improvement in execution times as compared to `subs()` method. The same algorithm will be implemented as it's an optimized algorithm for its task and it takes advantage over very fast integers.<br/>
 Horner scheme is a very general algorithm, which is also used in SymPy for computing compositions and rational transformations of polynomials, and many other, which require some sort of efficient evaluation of polynomials.
 Example:
 ```
@@ -294,21 +294,21 @@ These implemented will extend the current `diff()` to differentiate the `Polynom
 ###Greatest Common Divisor
 
 ####Algorithm
-**EEZ–GCD algorithm of Wang[13](http://dl.acm.org/citation.cfm?id=1089228)**<br/>
+**EEZ–GCD algorithm of Wang**[[13](http://dl.acm.org/citation.cfm?id=1089228)]<br/>
 This is a fast algorithm specifically for sparse polynomials and it computes GCDs of sparse multivariate polynomials over integers and rationals. Implementation of EEZ–GCD algorithm will require the variable–by–variable Hensel lifting algorithm. This will be the main algorithm implemented fo GCD.<br/>
 
 Some other algorithms for exploration are<br/>
-**Algorithm-heuristic GCD algorithm[14](www.eecs.berkeley.edu/~fateman/papers/phil8.ps)**<br/>
+**Algorithm-heuristic GCD algorithm**[[14](www.eecs.berkeley.edu/~fateman/papers/phil8.ps)]<br/>
 This transforms the problem of computing GCD of polynomials to integer GCD problem. This requires a fast kernel hence currently used in Maple only and SymPy also has an implementation<br/>
 Although the algorithm is heuristic, the same algorithm is implemented in SymPy and with current parametrization it never failed in SymPy.<br/>
 Because sophisticated sparse algorithm are relatively slow on small problems and emerge superior in large problems, this algorithm is chosen. It is faster than most algorithms for low degree polynomials of upto ten variables.<br/>	
 It also requires very efficient integer GCD algorithm, hence the fast integer library will come of benefit.
 
 **Using Grobners basis(optional)**<br/>
-An addition algorithm[15](http://ac.els-cdn.com/S0747717108801058/1-s2.0-S0747717108801058-main.pdf?_tid=d6cbe41a-d39f-11e4-a933-00000aab0f02&acdnat=1427364598_1af8d119916e99d960411c7a47e825fc) can also be implemented that uses Groebner bases for computing GCD of multivariate polynomials which will done only if Groebner basis is implemented.
+An addition algorithm[[15](http://ac.els-cdn.com/S0747717108801058/1-s2.0-S0747717108801058-main.pdf?_tid=d6cbe41a-d39f-11e4-a933-00000aab0f02&acdnat=1427364598_1af8d119916e99d960411c7a47e825fc)] can also be implemented that uses Groebner bases for computing GCD of multivariate polynomials which will done only if Groebner basis is implemented.
 
 ###Square-free decomposition
-The fast algorithm of Yun[16](http://en.wikipedia.org/wiki/Square-free_polynomial) for computing square–free decompositions in domains of characteristic zero for multivariate polynomials. The cost of computing square–free decomposition is equivalent to the computation of the greatest common divisor of f and its derivative. This is dependent on the GCD algorithm.<br/>
+The fast algorithm of Yun[[16](http://en.wikipedia.org/wiki/Square-free_polynomial)] for computing square–free decompositions in domains of characteristic zero for multivariate polynomials. The cost of computing square–free decomposition is equivalent to the computation of the greatest common divisor of f and its derivative. This is dependent on the GCD algorithm.<br/>
 Working principle
 ```
 a_0 = gcd(f, f');   b_1 = f/a_0;   c_1 = f'/a_0;   d_1 = c_1 - b_1';   i = 1;
@@ -339,8 +339,8 @@ Polynomial s_polynomial(const Polynomial a, const Polynomial b){
 }
 ```
 Note the importance of introducing ordering of monomials in computation of s_polynomial.<br/>
-Once the above methods are implemented then improved version of Buchberger's algorithm will be done[16](http://www.maths.qmul.ac.uk/~whitty/LSBU/MathsStudyGroup/Buchberger.pdf).<br/>
-The same is also implemented in `groebner()` of SymPy[17](https://github.com/sympy/sympy/blob/master/sympy/polys/groebnertools.py#L52).<br/>
+Once the above methods are implemented then improved version of Buchberger's algorithm will be done[[16](http://www.maths.qmul.ac.uk/~whitty/LSBU/MathsStudyGroup/Buchberger.pdf)].<br/>
+The same is also implemented in `groebner()` of SymPy[[17](https://github.com/sympy/sympy/blob/master/sympy/polys/groebnertools.py#L52)].<br/>
 
 It should be noted that for linear system of polynomials, this reduces to Gauss-algorithm and hence can be applied to solve that system. In SymPy, it is noted that solving using this method is faster that the Gauss-Jordan implemented using `solve()`
 ```
