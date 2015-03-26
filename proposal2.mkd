@@ -355,12 +355,12 @@ It should be noted that for linear system of polynomials, this reduces to Gauss-
 
 ##Timeline
 
-###Pre-GSoC
+####Pre-GSoC
 * Do an audit of [Piranha](https://github.com/bluescarni/piranha). Clear doubts, if any, with author [Francesco Biscani](https://github.com/bluescarni) or [Ondřej](https://github.com/bluescarni).
 * Try out Piranha, look into the integer and hashtable implementation. Go through the polynomial implementation.
 * Submit a wiki on the possible algorithms for various implementation and their details.
 
-###Community Bonding
+####Community Bonding
 * Chalk out all design details of implementation and decide on undecided areas of implementation possible such as implementation of symbolic coefficients/exponents.<br/>
 
 Work with mentor and implement
@@ -368,64 +368,64 @@ Work with mentor and implement
 * The faster hashtable implementation.<br/>
 Enough understanding of implementation should be gained so that tweaking as per needs is possible in the future.
 
-###Week 1
+####Week 1
 * Implement a basic polynomial structure, which uses GMP working, with Kronecker substitution used as key in hashtable with add and subtract methods.
 
-###Week 2
+####Week 2
 * Update the polynomial structure which uses the new integer for small coefficients and switches to GMP for large.
 * First the implementation and tests can be carried out for monomials. 
 
-###Week 3
+####Week 3
 * For multiplication of two monomials, check before the operation that the result will fit or not in packed structure.
 * When it does not fit, implement a method to convert from packed structure to tuple
 * Update the polynomial structure to use this.
 * Send in a PR.
 
-###Week 4
+####Week 4
 * Implement repeated squaring algorithm for exponentiation.
 * Implement benchmarks for the polynomial module.
 * Test it against various other CAS polynomial like Piranha, Pynac.
 * Check out the areas where improvement is possible.
 
-###Week 5
+####Week 5
 * Experiment with the implementation, possible tweaking of integer/hashtable implementation will be needed.
 * Benchmark and get it working atleast as fast as Piranha if not faster.
 * Send in a PR.
 
-###Week 6
+####Week 6
 * Implement `division()` function.
 * Send in a PR.
 * Start working on the implementation of generalized division algorithm.
 
-###Week 7
+####Week 7
 * Complete the implementation of generalized division algorithm.
 * Send in a PR.
 
-###Week 8
+####Week 8
 * Implement the Horner's scheme for evalution methods.
 * Implement the `diff()` and `integrate()`.
 * Send in a PR.
 
-###Week 9
+####Week 9
 * Finalize on the GCD algorithm, with insights on how things where done in SymPy.
 * Start working on the implementation of GCD algorithm.
 * Implement the GCD algorithm
 
-###Week 10
+####Week 10
 * Complete the implemetation of GCD algorithm.
 * Get both `gcd()` and `lcm()` methods working.
 * Send in a PR.
 
-###Week 11
+####Week 11
 * Implement the square-free decomposition
 * Send in a PR.
 
-###Week 12
+####Week 12
 * Implement our very own fast integer for all CSymPy for speed.
 * Work on the polynomial documentation.
 * Send in a PR.
 
-###Week 13
+####Week 13
 * A buffer week. Try and get the PRs merged. In case there are some unimplemented details/TODO's, try to finish them off this week.
 
 Note: The tests for the methods implemented will be written simultaneously with the methods, this is not specifically mentioned in the timeline. I’ve tried to structure the timeline so that there is no week which is purely for coding or purely for learning.
