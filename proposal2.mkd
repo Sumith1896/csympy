@@ -74,7 +74,7 @@ I plan to do a sparse implementation of polynomial module. The following steps w
 1. A fast integer implementation.
 2. Kronecker packing of the exponents 
 3. Faster hashtable and std::vector. 
-4. Use faster c++ class instead of mpzclass for all CSymPy integers for speed.
+4. Use faster c++ class instead of `mpzclass` for all CSymPy integers for speed.
 
 SymPy currently does not have exponent packing which also can be implemented to gain speed.
 
@@ -95,7 +95,7 @@ Note: Multiplying the above two polynomials i.e. `f*g` is planned to returned `(
 	  `expand(f*g)`. The `expand(f*g)` will expand and multiply by Kronecker substitution is explained in detail in implementation details [here](https://github.com/Sumith1896/csympy/blob/solvers/proposal2.mkd#multiplication). 
 
 ###Division
-Division between two polynomials f, g gives quotient q and remainder r such that `f = g*q + r` is satisfied with degree of r is less than q. There will be a `division()` function for each of them, that take two polynomial arguments and returns a polynomial.
+Division between two polynomials f, g gives quotient q and remainder r such that `f = g*q + r` is satisfied with degree of r is less than q. There will be a `division()` function that takes two polynomial arguments and returns a polynomial.
 ```
 RCP<Polynomial> q;
 RCP<Polynomial> r;
@@ -103,9 +103,9 @@ division(f, g, outArg(q), outArg(r));
 ```
 Here, `q = 3*x` and `r = -6*x + 2` and 
 
-A more generalised division algorithm will be implemented we reduce a polynomial `f` modulo a set of polynomials `G` i.e.given a polynomial `f` and a set of polynomials `G = (g_1, ..., g_n)`, it computes a set of quotients `q = (q_1, ..., q_n)` and the remainder `r` such that `f = q_1*g_1 + ... + q_n*g_n + r`, where `r` vanishes or `r` is a completely reduced polynomial with respect to `G`.
+A more generalised division algorithm will be implemented we reduce a polynomial `f` modulo a set of polynomials `G` i.e. given a polynomial `f` and a set of polynomials `G = (g_1, ..., g_n)`, it computes a set of quotients `q = (q_1, ..., q_n)` and the remainder `r` such that `f = q_1*g_1 + ... + q_n*g_n + r`, where `r` vanishes or `r` is a completely reduced polynomial with respect to `G`.
 ```
-RCP<Polynomial> q[]; //help-how to declare a
+RCP<Polynomial> q[]; //help-how to declare an array
 RCP<Polynomial> r;
 reduced(f, G, outArg(q), outArg(r));   //help-is it the right way to pass q and G, both being arrays
 ```
@@ -123,18 +123,6 @@ In [11]: %timeit f.subs(x, 2)
 In [12]: %timeit f.eval(2)
 100000 loops, best of 3: 5.54 µs per loop
 ```
-For univariate polynomials, it returns a `int`
-```
-RCP<const Integer> value = f->eval(3);
-```
-Then `value` will be 83.<br/>
-For multivariate polynomials, it returns a `Polynomial`, also the change in the input API
-```
-RCP<const Polynomial> k = Poly(x*y**2 + y);
-RCP<const Polynomial> m = k->eval(y, 2);
-```
-Then the Polynomial `m` will be `4*x + 2`.<br/>
-Another design choice that cna be made is that `RCP<const Basic>` is returned in both cases and then is dynamically casted.
 
 ###Derivative and Integrals
 Differention of polynomials with respect symbols will be useful and easy to implement feature.
@@ -148,8 +136,8 @@ Same goes for the integrals.
 RCP<const Polynomial> d = f->integrate(x);
 RCP<const Polynomial> e = f->integrate(y);
 ```
-here, 'd' will be '3*x**4/4 + 2*x' and `e` will be `3*x**3*y + 2*y`.<br/>
-NOTE: Though it is a indefinite integral, constant is not added, the user is expected to know.
+Here, `d`will be `3*x**4/4 + 2*x` and `e` will be `3*x**3*y + 2*y`.<br/>
+Note: Though it is a indefinite integral, constant is not added, the user is expected to know.
 
 ###GCD and LCM
 With division, GCD and LCM of univariate and multivariate polynomial can be computed. GCD and LCM are useful as standalone algorithms as well as component of other algorithms. <br/>
@@ -162,7 +150,7 @@ The point to be noted here is that if the polynomial has integer coefficients th
 The polynomial `k` will be `x**3*y**2 + x**2*y**3`.
 
 ###Square-free decomposition
-Given a polynomial f, square–free decomposition (factorization) of f gives a list of polynomials (factors) `f_1, f_2... f_n`, such that all pairs of polynomials `(f_i, f_j)`, for i not equal to j, are co–prime, and `f = f_1 f_2^2...f_n^n`. Thus each `f_i` has no repeated roots. Note that square–free decomposition does not give a true factorization into irreducibles, although is a very important step in any factorization algorithm.<br/>
+Given a polynomial f, square–free decomposition (factorization) of f gives a list of polynomials (factors) `f_1, f_2... f_n`, such that all pairs of polynomials `(f_i, f_j)`, for i not equal to j, are co–prime, and `f = f_1*f_2^2*...*f_n^n`. Thus each `f_i` has no repeated roots. Note that square–free decomposition does not give a true factorization into irreducibles, although is a very important step in any factorization algorithm.<br/>
 There will be an unordered map defined from `Polynomial` to `Integer` which will be returned or the `umap_basic_num` can be used.<br/>
 Example: For
 ```
@@ -180,13 +168,13 @@ CSymPy benchmark system can be improved a lot and I plan to implement benchmarks
 * K. Complex Domain so on.<br/>
 
 This will help in testing it against other CAS. Eventually CSymPy aims to be the fastest and good benchmarks will be necessary. Also this vs Pynac, if positive, can be convincing to replace Sage's core.<br/>
-Note: If a better source of great benchmark is suggested, then those will be implemented. The these can be implemented atleast as examples.
+Note: If a better source of great benchmark is suggested, then those will be implemented. These can then be implemented as examples.
 
-**If the above are successfully completed and if time permits, a basic implementation of Groebner basis will be done, highlighting the power of the newly implemented polynomial module**<br>
+**If the above are successfully completed and if time permits, a basic implementation of Groebner bases will be done, highlighting the power of the newly implemented polynomial module**<br>
 
 ###Groebner bases
-The method of Groebner bases is a powerful technique for solving problems in commutative algebra. Gröbner bases provide a uniform approach for solving problems that can be expressed in terms of systems of multivariate polynomial equations. It has many practical applications.<br/>
-Calculating a Gröbner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed.<br/>
+The method of Groebner bases is a powerful technique for solving problems in commutative algebra. Groebner bases provide a uniform approach for solving problems that can be expressed in terms of systems of multivariate polynomial equations. It has many practical applications.<br/>
+Calculating a Groebner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed. The algorithm used for computation is Buchberger's algorithm<br/>
 Buchberger's algorithm can be viewed as a generalization of the Euclidean algorithm for univariate GCD computation and of Gaussian elimination for linear systems.<br/>
 The basic implementation is relatively simple to implement.<br/>
 ```
@@ -285,6 +273,18 @@ for k = n-1, n-2,...1, 0 with `b_n = a_n` reaching `b_0 = P(t)`. This follows fr
 ```
 P(x) = (...(a_n*x + a_(n-1))*x +...+ a_1)*x + a_0
 ```
+For univariate polynomials, it returns a `int`
+```
+RCP<const Integer> value = f->eval(3);
+```
+Then `value` will be 83.<br/>
+For multivariate polynomials, it returns a `Polynomial`, also the change in the input API
+```
+RCP<const Polynomial> k = Poly(x*y**2 + y);
+RCP<const Polynomial> m = k->eval(y, 2);
+```
+Then the Polynomial `m` will be `4*x + 2`.<br/>
+Another design choice that cna be made is that `RCP<const Basic>` is returned in both cases and then is dynamically casted.
 
 ###Differentiation and Integration
 The definitions of derivative and integrals are themselves algorithmic in nature. 
