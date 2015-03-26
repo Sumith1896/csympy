@@ -105,9 +105,9 @@ Here, `q = 3*x` and `r = -6*x + 2` and
 
 A more generalised division algorithm will be implemented we reduce a polynomial `f` modulo a set of polynomials `G` i.e. given a polynomial `f` and a set of polynomials `G = (g_1, ..., g_n)`, it computes a set of quotients `q = (q_1, ..., q_n)` and the remainder `r` such that `f = q_1*g_1 + ... + q_n*g_n + r`, where `r` vanishes or `r` is a completely reduced polynomial with respect to `G`.
 ```
-RCP<Polynomial> q[]; //help-how to declare an array
+std::vector<RCP<const Polynomial>> q;
 RCP<Polynomial> r;
-reduced(f, G, outArg(q), outArg(r));   //help-is it the right way to pass q and G, both being arrays
+reduced(f, G, std::vector<RCP<const Polynomial>> &q, outArg(r));
 ```
 returns the set of quotients `q` remainder polynomial or completely reduced polynomial `r` with respect to `G`.
 
@@ -246,8 +246,8 @@ The algorithm will polynomial divison algorithm[[10](http://en.wikipedia.org/wik
 The implementation will be carried out same as the `reduced()` is implemented in SymPy[[11](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)]<br/>
 ```
 void reduced(const RCP<const Polynomial> &f,   //help change g and q to arrays
-    const RCP<const Polynomial> &g,
-    const Ptr<RCP<const Polynomial>> &q,
+    std::vector<RCP<const Polynomial>> g,
+    std::vector<RCP<const Polynomial>> &q,
     const Ptr<RCP<const Polynomial>> &r);
 ```
 with usage as
