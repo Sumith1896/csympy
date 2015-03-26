@@ -229,7 +229,7 @@ In practice a power of two will substituted. We can use coefficients to determin
 
 ###Division
 ####division()
-The specialised `division()` implemented for two polynomials `f` and `g` will be declared as
+The specialised `division()` function that will be implemented for two polynomials `f` and `g` will be declared as
 ```
 void division(const RCP<const Polynomial> &f,
     const RCP<const Polynomial> &g,
@@ -240,7 +240,7 @@ with usage as
 ```
 division(f, g, outArg(q), outArg(r));
 ```
-The algorithm will polynomial divison algorithm[[10](http://en.wikipedia.org/wiki/Polynomial_long_division)].
+The algorithm will be polynomial divison algorithm[[10](http://en.wikipedia.org/wiki/Polynomial_long_division)].
 
 ####The generalized division algorithm
 The implementation will be carried out same as the `reduced()` is implemented in SymPy[[11](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)]<br/>
