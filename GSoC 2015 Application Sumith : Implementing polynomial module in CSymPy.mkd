@@ -4,7 +4,7 @@
 **University**: [Indian Institute of Technology, Bombay](http://www.iitb.ac.in)<br/>
 **Email**: sumith1896@gmail.com<br/>
 **Github/IRC**: [Sumith1896](https://github.com/Sumith1896)<br/>
-**Blog**: [sumith1896.github.io](sumith1896.github.io)
+**Blog**: [sumith1896.github.io](sumith1896.github.io)<br/>
 **Time-zone**: UTC+5:30
 
 ##Personal background
