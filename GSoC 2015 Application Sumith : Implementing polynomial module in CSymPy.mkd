@@ -92,7 +92,7 @@ RCP<const Polynomial> g = Poly(x**2 + 2);
 ```
 Note: Multiplying the above two polynomials i.e. `f*g` is planned to returned `(3*x**3 + 2)*(x**2 + 2)` 
 	  and not `3*x**5 + 6*x**3 + 2*x**2 + 4` by default but there will be a method `expand()` which will return this on 
-	  `expand(f*g)`. The `expand(f*g)` will expand and multiply by Kronecker substitution is explained in detail in implementation details [here](https://github.com/Sumith1896/csympy/blob/solvers/proposal2.mkd#multiplication). 
+	  `expand(f*g)`. The `expand(f*g)` will expand and multiply by Kronecker substitution is explained in detail in implementation details [here](https://github.com/sympy/sympy/wiki/GSoC-2015-Application-Sumith-:-Implementing-polynomial-module-in-CSymPy#multiplication). 
 
 ###Division
 Division between two polynomials f, g gives quotient q and remainder r such that `f = g*q + r` is satisfied with degree of r is less than q. There will be a `division()` function that takes two polynomial arguments and returns a polynomial.
@@ -112,7 +112,7 @@ reduced(f, G, std::vector<RCP<const Polynomial>> &q, outArg(r));
 returns the set of quotients `q` remainder polynomial or completely reduced polynomial `r` with respect to `G`.
 
 ###Evaluation
-Though there is `subs()` is already implemented in CSymPy, a method `eval()` will be added to the `Polynomial` class which will have a well known algorithm Horner's scheme implemented shown in the implementation section [below](https://github.com/Sumith1896/csympy/blob/solvers/proposal2.mkd#evaluation-1).<br/>
+Though there is `subs()` is already implemented in CSymPy, a method `eval()` will be added to the `Polynomial` class which will have a well known algorithm Horner's scheme implemented shown in the implementation section [below](https://github.com/sympy/sympy/wiki/GSoC-2015-Application-Sumith-:-Implementing-polynomial-module-in-CSymPy#evaluation-1).<br/>
 Comparison in SymPy
 ```
 In [10]: f = Poly(x**15 + 5*x**13 + x**12 + 7*x**7 + 38*x**4 + 2*x**2 + 10)
@@ -443,7 +443,7 @@ As I am pretty early in my academic career, I can contribute for years to come a
 and hopefully many more interesting things.
 
 ##References
-[1]Gitter discussions with [@certik](https://github.com/certik) and [@shivamvats](https://github.com/shivamvats).<br/>
+[1]Gitter discussions with [@certik](https://github.com/certik)<br/>
 [2][Square-free decomposition](http://en.wikipedia.org/wiki/Square-free_polynomial)<br/>
 [3][A Critique of the Mathematical Abilities of CA System, Michael Wester].(http://www.math.unm.edu/~wester/cas/book/Wester.pdf)<br/>
 [4]Discussion on Sage's mailing list, [Make Sage use CSymPy as the symbolic engine].(https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion)<br/>
