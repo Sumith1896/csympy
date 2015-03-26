@@ -186,7 +186,7 @@ Then `grobner(f)` returns a polynomial array `[Poly(x**2 + 1), Poly(y**4 -1)]`.
 ###Near future
 The polynomial module will grow and eventually many features will be implemented. Some of them are <br/>
 * **cancel()**: Cancels common factors from the numerator and the denominator of a rational function. Depends on the GCD algorithm.<br/>
-* **apart()**: Decomposes a univariate rational function f with integer coefficients into partial fractions. Algorithm of Manuel Bronstein [Bronstein1993partial], also better but limited [Wang1981partial].
+* **apart()**: Decomposes a univariate rational function f with integer coefficients into partial fractions. Algorithm of Manuel Bronstein will be implemented, also better but limited algorithm of Wang.
 * **Factorization** along with factoring in terms of cyclotomic polynomials, expanded factorisation including complex numbers.
 * **Polynomial roots** with system of polynomials with help of implemented Groebners basis.
 and many more.
