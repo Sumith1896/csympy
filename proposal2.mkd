@@ -209,7 +209,7 @@ The selection of sorting is irrelevant (whether first by lexicographic order and
 
 ###Multiplication
 The `expand()` will be implemented will work on Mul when either of the parameters are polynomials. It will use Kronecker's substituion trick[[7](http://en.wikipedia.org/wiki/Kronecker_substitution)][[8](http://www.cs.berkeley.edu/~fateman/papers/polysbyGMP.pdf)]. Here polynomials with integer coefficients are encoded as sufficiently large integers and arithmetics are done using long integer arithmetics, and later results are converted back to polynomials. This is possible by using an isomorphism (a reversible transformation) between polynomials and integers. This algorithm will be efficient as we already have a fast integer arithmetics library.<br/>
-Example[[9](http://web.maths.unsw.edu.au/~davidharvey/talks/kronecker-talk.pdf)]: Finding product of `f` and `g`, `h = f*g`
+Example: Finding product of `f` and `g`, `h = f*g`
 ```
 f = 41*x**3 + 49*x**2 + 38*x + 29
 g = 19*x**3 + 23*x**2 + 46*x + 21
@@ -220,7 +220,7 @@ Here, the cofficients are `packed` together. Then
 ```
 h(10**4) = f(10**4)*g(10**4) = 779187437354540344421320609.
 ```
-Coefficients of f and g are < 50, so coefficients of h are < 4*50**2 = 10**4.<br/>
+Coefficients of `f` and `g` are `< 50`, so coefficients of `h` are `< 4*50**2 = 10**4`.<br/>
 We can unpack `h(10**4)` to obtain
 ```
 h = 779*x**6 + 1874*x**5 + 3735*x**4 + 4540*x**3 + 3444*x**2 + 2132*x + 609
