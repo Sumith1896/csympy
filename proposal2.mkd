@@ -133,7 +133,8 @@ For multivariate polynomials, it returns a `Polynomial`, also the change in the 
 RCP<const Polynomial> k = Poly(x*y**2 + y);
 RCP<const Polynomial> m = k->eval(y, 2);
 ```
-Then the Polynomial `m` will be `4*x + 2`.
+Then the Polynomial `m` will be `4*x + 2`.<br/>
+Another design choice that cna be made is that `RCP<const Basic>` is returned in both cases and then is dynamically casted.
 
 ###Derivative and Integrals
 Differention of polynomials with respect symbols will be useful and easy to implement feature.
@@ -162,12 +163,14 @@ The polynomial `k` will be `x**3*y**2 + x**2*y**3`.
 
 ###Square-free decomposition
 Given a polynomial f, square–free decomposition (factorization) of f gives a list of polynomials (factors) `f_1, f_2... f_n`, such that all pairs of polynomials `(f_i, f_j)`, for i not equal to j, are co–prime, and `f = f_1 f_2^2...f_n^n`. Thus each `f_i` has no repeated roots. Note that square–free decomposition does not give a true factorization into irreducibles, although is a very important step in any factorization algorithm.<br/>
-There will be an unordered map defined from `Polynomial` to `Integer` which will be returned.<br/>
+There will be an unordered map defined from `Polynomial` to `Integer` which will be returned or the `umap_basic_num` can be used.<br/>
 Example: For
 ```
 RCP<const Polynomial> f = Poly(2*x**2 + 5*x**3 + 4*x**4 + x**5);
+umap_basic_num d = sqf(f);
+cout<<d;
 ```
-`sqf(f)` will return `[(x + 2, 1), (x, 2), (x + 1, 2)]`
+The printed otuput will be `{x + 2 : 1, x : 2, x + 1 : 2}`.
 
 ##The benchmarks
 CSymPy benchmark system can be improved a lot and I plan to implement benchmarks from Wester's article(or from any other source, suggestions welcome)[2]. The section H of this article has problems related to algebra and selected ones can be added to benchmark the implemented polynomial module. If time permits, the following sections can also be added:
@@ -185,8 +188,12 @@ Note: If a better source of great benchmark is suggested, then those will be imp
 The method of Groebner bases is a powerful technique for solving problems in commutative algebra. Gröbner bases provide a uniform approach for solving problems that can be expressed in terms of systems of multivariate polynomial equations. It has many practical applications.<br/>
 Calculating a Gröbner basis is typically a very time-consuming process for large polynomial systems, hence implementation CSymPy will guarantee speed.<br/>
 Buchberger's algorithm can be viewed as a generalization of the Euclidean algorithm for univariate GCD computation and of Gaussian elimination for linear systems.<br/>
-The basic impleementation is relatively simple to implement.<br/>
-Method: Given an array of polynomial, `groebner()` returns an array of Groebner Basis.<br/>
+The basic implementation is relatively simple to implement.<br/>
+```
+RCP<const Polynomial> f[2] = {Poly(x**2 + 1), Poly(x**3 + x*y**4)};
+RCP<const Polynomial> g[2] = grobner(f);
+```
+Then `grobner(f)` returns a polynomial array [Poly(x**2 + 1), Poly(y**4 -1)]
 
 ###Near future
 The polynomial module will grow and eventually many features will be implemented. Some of them are <br/>
@@ -199,7 +206,12 @@ and many more.
 ##Implementation details
 ###Data Structures
 The polynomial class only handles polynomials in an expanded form.The heart of the module will the data structure, the representation for expanded polynomials is already explained above(in summary of discussions).<br/>
-Examples such as `x**2*(x**2+1)**2*(x**2+2)**2` are then represented Mul(Add, Add) as usual in CSymPy.
+Examples such as `x**2*(x**2+1)**2*(x**2+2)**2` are then represented Mul(Add, Add) as usual in CSymPy.<br/>
+The `Poly()` method converts an polynomial expression to that of an object in `Polynomial class`
+```
+RCP<const Polynomial> f = Poly(x**2 + 2*x + 1);
+```
+The idea of constructing a `Polynomial` from a integer to integer dict is also a possibility.
 
 ###Canonicalization
 We should be able to determine that a + b and b + a are equivalent. This is one of reasons why it is important for every `Polynomial` to be stored in canonical form i.e. canonical ordering of terms. Everytime a user enters a poly, it is converted to canonical form. The canonical form for univariate is increasing order of exponent. In the multivariate representation, one approach would be to first sort the terms lexicographically and then by degree.<br/>
@@ -227,22 +239,39 @@ h = 779*x**6 + 1874*x**5 + 3735*x**4 + 4540*x**3 + 3444*x**2 + 2132*x + 609
 ```
 
 ###Division
-**The generalized division algorithm**
-The implementation will be carried out same as the `reduced()` is implemented, given in the references.[7]<br/>
+**division()**<br/>
 THe specialised `division()` implemented for two polynomials `f` and `g` will be declared as
 ```
-void division(const RCP<const Polynomial> &a,
-    const RCP<const Polynomial> &b,
+void division(const RCP<const Polynomial> &f,
+    const RCP<const Polynomial> &g,
     const Ptr<RCP<const Polynomial>> &q,
     const Ptr<RCP<const Polynomial>> &r);
 ```
+with usage as
+```
+division(f, g, outArg(q), outArg(r));
+```
+The algorithm will polynomial divison algorithm[11].
+
+**The generalized division algorithm**
+The implementation will be carried out same as the `reduced()` is implemented in SymPy[7]<br/>
+```
+void reduced(const RCP<const Polynomial> &f,   //help change g and q to arrays
+    const RCP<const Polynomial> &g,
+    const Ptr<RCP<const Polynomial>> &q,
+    const Ptr<RCP<const Polynomial>> &r);
+```
+with usage as
+```
+reduced(f, g, outArg(q), outArg(r));
+```
+The implementation will be carried out on the same lines as that of SymPy's[7].
 
 ###Exponentiation
 When `expand()` of exponentiation i.e `f**n` where f is a `Polynomial` and n is an integer constant we apply the repeated squaring algorithm that has the complexity `O(log(n))`.
 
 ###Evaluation
-A well known algorithm for evaluating univariate polynomial is Horner’s scheme, which is implemented in `eval()` method of SymPy's Poly class. This led significant improvement in execution times as compared to `subs()` method. The same algorithm will be implemented as it's an optimized algorithm for its task and it takes advantage over very fast integers.
-[Geddes1992algorithms]<br/>
+A well known algorithm for evaluating univariate polynomial is Horner’s scheme, which is implemented in `eval()` method of SymPy's Poly class. This led significant improvement in execution times as compared to `subs()` method. The same algorithm will be implemented as it's an optimized algorithm for its task and it takes advantage over very fast integers.<br/>
 Horner scheme is a very general algorithm, which is also used in SymPy for computing compositions and rational transformations of polynomials, and many other, which require some sort of efficient evaluation of polynomials.
 Example:
 ```
@@ -263,21 +292,29 @@ These implemented will extend the current `diff()` to differentiate the `Polynom
 
 ###Greatest Common Divisor
 
-For univariate polynomials
-*Algorithm-heuristic GCD algorithm [Liao1995heuristic]*
-This transforms the problem of computing GCD of polynomials to integer GCD problem. 
-Although the algorithm is heuristic, SymPy implements this and with current parametrization it never failed in SymPy.
-This algorithm is limited to integers and rationals, our main focus. In rationals it will be implemented by clearing denominators. It also requires very efficient integer GCD algorithm, hence the fast integer library will come of benefit.
+**Algorithm**
+EEZ–GCD algorithm of Wang[14]<br/>
+This is a fast algorithm specifically for sparse polynomials and it computes GCDs of sparse multivariate polynomials over integers and rationals. Implementation of EEZ–GCD algorithm will require the variable–by–variable Hensel lifting algorithm. This will be the main algorithm implemented fo GCD.<br/>
 
-For multivariate
-*EEZ–GCD algorithm of Wang [Wang1980eezgcd], [Moses1973ezgcd]*
-For computation of GCDs of sparse multivariate polynomials over integers and rationals. Implementation of EEZ–GCD algorithm should be rather straightforward, because we already have EEZ polynomial factorization algorithm implemented, and both algorithms share a common core (variable–by–variable Hensel lifting algorithm), and they differ mainly in the initialization phase. Having a fast algorithm for sparse polynomials is very important, because most polynomials that we encounter in real life problems are sparse.
+Some other algorithms for exploration are<br/>
+*Algorithm-heuristic GCD algorithm[15]*
+This transforms the problem of computing GCD of polynomials to integer GCD problem. This requires a fast kernel hence currently used in Maple only and SymPy also has an implementation<br/>
+Although the algorithm is heuristic, the same algorithm is implemented in SymPy and with current parametrization it never failed in SymPy.<br/>
+Because sophisticated sparse algorithm are relatively slow on small problems and emerge superior in large problems, this algorithm is chosen. It is faster than most algorithms for low degree polynomials.	
+It also requires very efficient integer GCD algorithm, hence the fast integer library will come of benefit.
 
-Using Grobner's basis
-We also implement an algorithm that uses Gröbner bases for computing GCD of multivariate polynomials [Cox1997ideals]. 
+**Using Grobners basis(optional)**<br/>
+An addition algorithm[13] can also be implemented that uses Groebner bases for computing GCD of multivariate polynomials which will done only if Groebners basis is implemented.
 
 ###Square-free decomposition
-In SymPy we implement the fast algorithm of Yun [Yun1976squarefree] for computing square–free decompositions in domains of characteristic zero. The cost of computing square–free decomposition is equivalent to the computation of the greatest common divisor of f and its derivative. 
+The fast algorithm of Yun[9] for computing square–free decompositions in domains of characteristic zero for multivariate polynomials. The cost of computing square–free decomposition is equivalent to the computation of the greatest common divisor of f and its derivative. This is dependent on the GCD algorithm.<br/>
+Working principle[10]
+```
+a_0 = gcd(f, f');   b_1 = f/a_0;   c_1 = f'/a_0;   d_1 = c_1 - b_1';   i = 1;
+iterate until b = 1
+a_i = gcd(b_i, d_i);   b_(i+1) = b_i/a_i;   c_(i+1) = d_i/a_i;   i = i + 1;    d_i = c_i - b_(i+1)';
+return a_1, a_2, ... ,a_(i-1)
+```
 
 ###Groebners basis
 **Check for Groebner basis**<br/>
@@ -290,7 +327,6 @@ If not, then [f, g, s_polynomial] form groebner basis which can be shown by taki
 This can be extended for larger arrays.
 
 **Algorithm**<br/>
-
 Methods needed for the algorithm:
 * `LM()`: Returns the leading monomial.
 * `LT()`: Returns the leading term.
@@ -301,9 +337,20 @@ Polynomial s_polynomial(const Polynomial a, const Polynomial b){
 	return expand(lcm(LM(f), LM(g))*(1/LT(f)*f - 1/LT(g)*g));
 }
 ```
-Note the importance of introducing ordering of monomials in computation of s_polynomial.
+Note the importance of introducing ordering of monomials in computation of s_polynomial.<br/>
+Once the above methods are implemented then improved version of Buchberger's algorithm will be done[16].<br>
+The same is also implemented in `groebner()` of SymPy[17].<br/>
 
 It should be noted that for linear system of polynomials, this reduces to Gauss-algorithm and hence can be applied to solve that system. In SymPy, it is noted that solving using this method is faster that the Gauss-Jordan implemented using `solve()`
+```
+>>> F = [x + 5*y - 2, -3*x + 6*y - 15]
+
+>>> %timeit groebner(F, x, y)
+100 loops, best of 3: 5.15 ms per loop
+
+>>> %timeit solve(F, x, y)
+10 loops, best of 3: 22.7 ms per loop
+```
 
 ##Timeline
 
@@ -385,7 +432,7 @@ Note: The tests for the methods implemented will be written simultaneously with 
 ###Post GSoC
 As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I wish to do GSoC because the spirit being new comers are given oppurtunity to be permanent part of an open source team. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy and SymPy in general. Post GSoC, I have the following plans.
 * CSymPy is planned to be a optional fast SymPy core. I want to be part of the team when SymPy is supplied with optional CSymPy.
-* The polynomial mdule will not be completed in a summers time, hence all the remaining features, eventually as much as SymPy will be implemented in the coming year.
+* The polynomial module will not be completed in a summers time, hence all the remaining features, eventually as much as SymPy will be implemented in the coming year.
 * CSymPy has also the chances of being a bigger thing than SymPy itself in the CAS competition. For that the documentation has to be expanded and code needs organization into modules.
 * I had gone through the extensive reading period for implementation of solvers in CSymPy which I plan to do in future once it is well figured out in SymPy.<br/>
 and hopefully many more interesting things.
@@ -402,6 +449,24 @@ and hopefully many more interesting things.
 
 6. [http://www.math.wpi.edu/IQP/BVCalcHist/calc5.html](http://www.math.wpi.edu/IQP/BVCalcHist/calc5.html)
 
-7.1 https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322<br/>
-7.2 https://github.com/sympy/sympy/blob/master/sympy/polys/densearith.py#L1459<br/>
-7.3 https://github.com/sympy/sympy/blob/master/sympy/polys/polytools.py#L6359<br/>
+7. * https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322<br/>
+   * https://github.com/sympy/sympy/blob/master/sympy/polys/densearith.py#L1459<br/>
+   * https://github.com/sympy/sympy/blob/master/sympy/polys/polytools.py#L6359<br/>
+
+8. http://download.springer.com/static/pdf/148/chp%253A10.1007%252F978-3-540-30137-0_5.pdf?auth66=1427362024_3c9612033106aa60e0454718ff1da9fa&ext=.pdf
+
+9. http://en.wikipedia.org/wiki/Square-free_polynomial
+
+10. http://download.springer.com/static/pdf/148/chp%253A10.1007%252F978-3-540-30137-0_5.pdf?auth66=1427362024_3c9612033106aa60e0454718ff1da9fa&ext=.pdf
+
+11. http://en.wikipedia.org/wiki/Polynomial_long_division
+
+12. DAVID COX, JOHN LITTLE, and DONAL O’ SHEA, Ideals, Varieties and Algorithms. An Introduction to Computational Algebraic Geometry and Commutative Algebra, second ed., Undergraduate Texts in Mathematics, Springer-Verlag, New York, 1997.
+
+13. [Three New Algorithms for Multivariate Polynomial GCD TATEAKI SASAKI AND MASAYUKI SUZUKI 1988](http://ac.els-cdn.com/S0747717108801058/1-s2.0-S0747717108801058-main.pdf?_tid=d6cbe41a-d39f-11e4-a933-00000aab0f02&acdnat=1427364598_1af8d119916e99d960411c7a47e825fc)
+
+15. www.eecs.berkeley.edu/~fateman/papers/phil8.ps
+
+16. http://www.maths.qmul.ac.uk/~whitty/LSBU/MathsStudyGroup/Buchberger.pdf
+
+17. https://github.com/sympy/sympy/blob/master/sympy/polys/groebnertools.py
