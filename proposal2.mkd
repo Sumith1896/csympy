@@ -23,6 +23,8 @@ I use Ubuntu 14.04LTS as my primary work machine with Sublime Text 3 with some u
 I have been programming in C++ for the past one year and in Python for past 6 months. I started learning programming about a year ago with the C language. I have developed couple of webpages with JavaScript and web apps with Python, PHP along with SQL database support. My favourite language among these is C++ as I am most proficient in C++ as compared to other languages and whenever it comes to speed and competitive coding, I rely on C++.
 Developed a complete game of Sudoku using C++ with gtkmm library for GUI.
 
+I have no other commitments for summer. 
+
 ##Contribution to CSympy
 CSymPy is the first open source project I contributed to and with the help of the great community I have contributed in the following ways:
 
@@ -354,6 +356,10 @@ It should be noted that for linear system of polynomials, this reduces to Gauss-
 ```
 
 ##Timeline
+I have no other commitments for this summer and I will be able to contribute for full 50 hours a week. All the programming and learning that I will be doing this summers will be through this project .<br/>
+My summer vacation starts on 24th April. Hence, I can start working on full time basis from then on.<br/> 
+Though my classes start in mid July, it won't be an issue as I won't have any tests or exams till the coding period ends.<br/>
+I will also maintain a blog to get feedback from the community and show my progress.
 
 ####Pre-GSoC
 * Do an audit of [Piranha](https://github.com/bluescarni/piranha). Clear doubts, if any, with author [Francesco Biscani](https://github.com/bluescarni) or [Ondřej](https://github.com/bluescarni).
