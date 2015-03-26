@@ -246,7 +246,7 @@ The algorithm will be polynomial divison algorithm[[10](http://en.wikipedia.org/
 The implementation will be carried out same as the `reduced()` is implemented in SymPy[[11](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)]<br/>
 ```
 void reduced(const RCP<const Polynomial> &f,   //help change g and q to arrays
-    std::vector<RCP<const Polynomial>> g,
+    std::vector<RCP<const Polynomial>> &g,
     std::vector<RCP<const Polynomial>> &q,
     const Ptr<RCP<const Polynomial>> &r);
 ```
@@ -274,15 +274,15 @@ for k = n-1, n-2,...1, 0 with `b_n = a_n` reaching `b_0 = P(t)`. This follows fr
 ```
 P(x) = (...(a_n*x + a_(n-1))*x +...+ a_1)*x + a_0
 ```
-For univariate polynomials, it returns a `int`
+For univariate polynomials, it returns a `Integer`.
 ```
-RCP<const Integer> value = f->eval(3);
+RCP<const Integer> value = f->eval(integer(3));
 ```
 Then `value` will be 83.<br/>
 For multivariate polynomials, it returns a `Polynomial`, also the change in the input API
 ```
 RCP<const Polynomial> k = Poly(x*y**2 + y);
-RCP<const Polynomial> m = k->eval(y, 2);
+RCP<const Polynomial> m = k->eval(y, integer(2));
 ```
 Then the Polynomial `m` will be `4*x + 2`.<br/>
 Another design choice that cna be made is that `RCP<const Basic>` is returned in both cases and then is dynamically casted.
