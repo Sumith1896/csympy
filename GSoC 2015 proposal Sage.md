@@ -48,11 +48,15 @@ SymPy has a very interesting codebase which I started exploring parallel to that
 CSymPy currently lacks a polynomial module which is very essential in achieving CSymPy's goal of being the fastest CAS ever. Having a polynomial module is a core concern and implementing a fast module also help in achieving a fast series module. We can use [Piranha's](https://github.com/bluescarni/piranha/) polynomial module, but it has complicated code and does not compile with old compilers. My aim is to implement a sparse polynomial module in CSymPy itself.
 
 ##Why this project?
-Mathematics is pretty close to me and that's why it's CSymPy that I choose to work under. The discussion about algorithms, methods, benchmarks, speed, etc. that happen in the community is really engaging and enriching. With this project, introduction of new modules in CSymPy will allow it to explore new possiblities of CAS speeds and also at the same time being compatible as a optional fast SymPy core.<br/>
-Personally as a computer scienc student, this project is very closely related to my academics considering the math and algorithms that will go in the implementation.
+Many a time it happens in physics and mathematics that once a problem is solved you get a lot of insights of the problem when it solved generally(symbolically) than when you solve it numerically given the initial data. This is one of the reasons why symbolic computation interests me.<br/>
+Mathematics is pretty close to me and that's why it's CSymPy and Sage in general that I choose to work under. The discussion about algorithms, methods, benchmarks, speed, etc. that happen in the community is really engaging and enriching. With this project, introduction of new modules in CSymPy will allow it to explore new possiblities of CAS speeds and also at the same time being compatible as a optional fast SymPy core.
 
 ##Benefits to Community
-Computer Algebra Systems are used by the student community in general and having a really fast CAS is indispensable in research done by various communities. CSymPy has been very promising in the CAS competition with [Sage](http://www.sagemath.org/) considering it as a symbolic engine[[4](https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion)]. SymPy is not a mentoring organisation, hence will not have projects under them. CSymPy is still in early stage, with support, it can grow. CSymPy will be a fast CAS core at the same time being standalone CAS, this way benefitting the student community and the larger open source community in general.
+CSymPy has been very promising in the CAS competition with Sage considering it as a symbolic engine[[4](https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion)] which will soon be implemented. <br/>
+Benefits to Sage<br/>
+* Eventually CSymPy will be used as a symbolic engine of Sage, implementing missing features will be necessary and polynomial is a high priority one.
+* Sage already uses SymPy. Once CSymPy is shipped as a fast SymPy core, SymPy will be benifitted and hence Sage.<br/>
+SymPy is not a mentoring organisation this year, hence will not have projects under them. CSymPy is still in early stage, with support, it can grow.<br/>
 
 ##Summary of discussions[1]
 SymPy uses sparse polys, the sparse polys use a tuple of ints to represent the power in monomials. Then you have a dictionary (hashtable) where you simply store the coefficients.<br/>
@@ -437,7 +441,7 @@ Enough understanding of implementation should be gained so that tweaking as per 
 Note: The tests for the methods implemented will be written simultaneously with the methods, this is not specifically mentioned in the timeline. I’ve tried to structure the timeline so that there is no week which is purely for coding or purely for learning.
 
 ###Post GSoC
-As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I wish to do GSoC because the spirit being new comers are given oppurtunity to be permanent part of an open source team. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy and SymPy in general. Post GSoC, I have the following plans.
+As I am pretty early in my academic career, I can contribute for years to come and there are many interesting stuff to keep me engaged. I wish to do GSoC because the spirit being new comers are given oppurtunity to be permanent part of an open source team. I plan to take GSoC project as a platform to be one of the strong contributors of CSymPy, SymPy and Sage in general. Post GSoC, I have the following plans.
 * CSymPy is planned to be a optional fast SymPy core. I want to be part of the team when SymPy is supplied with optional CSymPy.
 * The polynomial module will not be completed in a summers time, hence all the remaining features, eventually as much as SymPy will be implemented in the coming year.
 * CSymPy has also the chances of being a bigger thing than SymPy itself in the CAS competition. For that the documentation has to be expanded and code needs organization into modules.
