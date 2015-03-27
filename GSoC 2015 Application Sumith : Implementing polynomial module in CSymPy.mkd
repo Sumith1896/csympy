@@ -4,7 +4,7 @@
 **University**: [Indian Institute of Technology, Bombay](http://www.iitb.ac.in)<br/>
 **Email**: sumith1896@gmail.com<br/>
 **Github/IRC**: [Sumith1896](https://github.com/Sumith1896)<br/>
-**Blog**: [sumith1896.github.io](sumith1896.github.io)<br/>
+**Blog**: [sumith1896.github.io](http://sumith1896.github.io/)<br/>
 **Time-zone**: UTC+5:30
 
 ##Personal background
@@ -35,7 +35,7 @@ a**b so as to match SymPy.
 ##Contribution to SymPy
 SymPy has a very interesting codebase which I started exploring parallel to that of CSymPy's and this exploration led to:
 
-1. [PR 8962](https://github.com/sympy/sympy/pull/8962): (Merged) Implementing columnspace of a given matrix,a feature previously unimplemented in SymPy. Added the necessary tests and also updated documentation on this.
+1. [PR 8993](https://github.com/sympy/sympy/pull/8993): (Merged) Implementing columnspace of a given matrix,a feature previously unimplemented in SymPy. Added the necessary tests and also updated documentation on this.
 
 2. [PR 9067](https://github.com/sympy/sympy/pull/9067): (Merged) Fixed operators in sympy.physics.quantum.operator to give same results for `A*IdentityOperator()` and `IdentityOperator()*A` where A is an operator.
 
