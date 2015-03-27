@@ -53,9 +53,10 @@ Mathematics is pretty close to me and that's why it's CSymPy and Sage in general
 
 ##Benefits to Community
 CSymPy has been very promising in the CAS competition with Sage considering it as a symbolic engine[[4](https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion)] which will soon be implemented. <br/>
-Benefits to Sage<br/>
+Benefits to Sage
 * Eventually CSymPy will be used as a symbolic engine of Sage, implementing missing features will be necessary and polynomial is a high priority one.
-* Sage already uses SymPy. Once CSymPy is shipped as a fast SymPy core, SymPy will be benifitted and hence Sage.<br/>
+* Sage already uses SymPy. Once CSymPy is shipped as a fast SymPy core, SymPy will be benifitted and hence Sage.
+
 SymPy is not a mentoring organisation this year, hence will not have projects under them. CSymPy is still in early stage, with support, it can grow.<br/>
 
 ##Summary of discussions[1]
