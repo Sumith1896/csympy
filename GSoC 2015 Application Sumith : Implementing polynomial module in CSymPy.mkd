@@ -444,15 +444,15 @@ and hopefully many more interesting things.
 ##References
 [1]Gitter discussions with [@certik](https://github.com/certik)<br/>
 [2][Square-free decomposition](http://en.wikipedia.org/wiki/Square-free_polynomial)<br/>
-[3][A Critique of the Mathematical Abilities of CA System, Michael Wester].(http://www.math.unm.edu/~wester/cas/book/Wester.pdf)<br/>
-[4]Discussion on Sage's mailing list, [Make Sage use CSymPy as the symbolic engine].(https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion)<br/>
+[3][A Critique of the Mathematical Abilities of CA System, Michael Wester](http://www.math.unm.edu/~wester/cas/book/Wester.pdf).<br/>
+[4][Discussion on Sage's mailing list, [Make Sage use CSymPy as the symbolic engine](https://groups.google.com/forum/#!topic/sage-gsoc/WbmAJAaGlhs/discussion).<br/>
 [5][Groebner Basis](http://en.wikipedia.org/wiki/Gr%C3%B6bner_basis)<br/>
 [6][Buchberger's algorithm](http://en.wikipedia.org/wiki/Buchberger%27s_algorithm)<br/>
 [7][Kronecker substitution](http://en.wikipedia.org/wiki/Kronecker_substitution)<br/>
 [8][Can you save time in multiplying polynomials by encoding them as integers? Richard J. Fateman](http://www.cs.berkeley.edu/~fateman/papers/polysbyGMP.pdf)<br/>
 [9]A document on [Kronecker substitution](http://web.maths.unsw.edu.au/~davidharvey/talks/kronecker-talk.pdf)<br/>
 [10][Polynomial division](http://en.wikipedia.org/wiki/Polynomial_long_division)<br/>
-[11]The implementation of division in SymPy[1](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)[2]   (https://github.com/sympy/sympy/blob/master/sympy/polys/densearith.py#L1459)<br/>
+[11]The implementation of division in SymPy[[1](https://github.com/sympy/sympy/blob/master/sympy/polys/rings.py#L1322)],[[2](https://github.com/sympy/sympy/blob/master/sympy/polys/densearith.py#L1459)].<br/>
 [12][Horner's method](http://en.wikipedia.org/wiki/Horner's_method)<br/>
 [13][THE EEZ-GCD ALGORITHM, Paul S. Wang](http://dl.acm.org/citation.cfm?id=1089228)<br/>
 [14][Evaluation of Heuristic Polynomial GCD, Liao, Fateman](www.eecs.berkeley.edu/~fateman/papers/phil8.ps)<br/>
