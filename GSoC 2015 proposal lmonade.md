@@ -52,7 +52,7 @@ CSymPy currently lacks a polynomial module which is very essential in achieving 
 Many a time it happens in physics and mathematics that once a problem is solved you get a lot of insights of the problem when it solved generally(symbolically) than when you solve it numerically given the initial data. This is one of the reasons why symbolic computation interests me.<br/>
 Mathematics is pretty close to me and that's why it's CSymPy and Sage in general that I choose to work under. The discussion about algorithms, methods, benchmarks, speed, etc. that happen in the community is really engaging and enriching. With this project, introduction of new modules in CSymPy will allow it to explore new possiblities of CAS speeds and also at the same time being compatible as a optional fast SymPy core.
 
-##Why lmonade
+##Why lmonade?
 Since lmonade promotes ideas to improve various open source/free scientific software, especially computational algebra and scientific software in general, lmonade is chosen. Since lmonade is also interested mathematical algorithms & data structures projects, this project is well suited.<br/>
 Computer Algebra Systems are used by the student community in general and having a really fast CAS is indispensable in research done by various communities. CSymPy will be a fast CAS core at the same time being standalone CAS, this way benefitting the student community and the larger open source community in general.<br/>
 SymPy is not a mentoring organisation this year, hence will not have projects under them. CSymPy is still in early stage, with support, it can grow.<br/>
