@@ -5,7 +5,7 @@
 **Email**: sumith1896@gmail.com<br/>
 **Github/IRC**: [Sumith1896](https://github.com/Sumith1896)<br/>
 **Blog**: [sumith1896.github.io](http://sumith1896.github.io/)<br/>
-**Time-zone**: UTC+5:30
+**Time-zone**: UTC+5:30<br/>
 **Probable mentor**: [Ondřej Čertík](http://www.ondrejcertik.com/) | ondrej.certik@gmail.com 
 
 ##Personal background
