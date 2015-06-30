@@ -25,7 +25,7 @@ if [[ "${TRAVIS_OS_NAME}" != "osx" ]]; then
         sudo cp ./libc++.so.1.0 /usr/lib/;
         sudo mkdir /usr/include/c++/v1;
         cd .. && sudo cp -r include/* /usr/include/c++/v1/;
-        then cd /usr/lib && sudo ln -sf libc++.so.1.0 libc++.so;
+        cd /usr/lib && sudo ln -sf libc++.so.1.0 libc++.so;
         sudo ln -sf libc++.so.1.0 libc++.so.1 && cd $our_install_dir;
         wget http://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2;
         tar -xjf gmp-6.0.0a.tar.bz2;
