@@ -20,7 +20,13 @@ if [[ "${TRAVIS_OS_NAME}" != "osx" ]]; then
     sudo apt-get install -y cmake
     if [[ "${CC}" == *"clang"* ]]; then
         echo "sudo apt-get install libc++-dev"
-        sudo apt-get install libc++-dev
+        svn co --quiet http://llvm.org/svn/llvm-project/libcxx/trunk libcxx;
+        cd libcxx/lib && bash buildit;
+        sudo cp ./libc++.so.1.0 /usr/lib/;
+        sudo mkdir /usr/include/c++/v1;
+        cd .. && sudo cp -r include/* /usr/include/c++/v1/;
+        then cd /usr/lib && sudo ln -sf libc++.so.1.0 libc++.so;
+        sudo ln -sf libc++.so.1.0 libc++.so.1 && cd $our_install_dir;
         wget http://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2;
         tar -xjf gmp-6.0.0a.tar.bz2;
         cd gmp-6.0.0 && ./configure --prefix=$our_install_dir --enable-cxx CXXFLAGS="-stdlib=libc++" && make -j8 install && cd ..;
