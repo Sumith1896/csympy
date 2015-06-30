@@ -24,8 +24,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS_DEBUG_INIT   "${common} -g")
 endif ()
 
-if (CMAKE_CXX_COMPILER_ID MATCHES Clang)
-    # clang
+if (CMAKE_CXX_COMPILER_ID MATCHES Clang++)
+    # clang++
     set(common "-std=c++11 -Wall -Wextra -fPIC -stdlib=libc++")
     set(CMAKE_CXX_FLAGS_RELEASE_INIT "${common} -O3 -march=native -ffast-math -funroll-loops")
     set(CMAKE_CXX_FLAGS_DEBUG_INIT   "${common} -g")
