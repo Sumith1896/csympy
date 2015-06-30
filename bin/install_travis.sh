@@ -22,7 +22,7 @@ if [[ "${TRAVIS_OS_NAME}" != "osx" ]]; then
         sudo apt-get install -y libc++-dev
         wget http://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.bz2;
         tar -xjf gmp-6.0.0a.tar.bz2;
-        cd gmp-6.0.0 &&  CC=/usr/local/clang-3.4/bin/clang CXX=/usr/local/clang-3.4/bin/clang++ CXXFLAGS="-stdlib=libc++" ./configure --prefix=$our_install_dir --enable-cxx && make -j8 install && cd ..;
+        cd gmp-6.0.0 && CXXFLAGS="-stdlib=libc++" ./configure --prefix=$our_install_dir --enable-cxx && make -j8 install && cd ..;
     else
         sudo apt-get install libgmp-dev
     fi
