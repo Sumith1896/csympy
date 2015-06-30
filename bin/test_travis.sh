@@ -74,18 +74,13 @@ EOF
     exit 0
 fi
 
-if [[ "${TRAVIS_OS_NAME}" != "osx" ]] && [[ "${CC}" == *"clang"* ]]; then
-    CXXFLAGS="CC=clang-3.4 CXX=clang++-3.4" "-Werror" cmake "-stdlib=libc++" $cmake_line ${SOURCE_DIR}
-else
-    CXXFLAGS="-Werror" cmake $cmake_line ${SOURCE_DIR}
-fi
+CXXFLAGS="-Werror" cmake $cmake_line ${SOURCE_DIR}
 echo "Current directory:"
 pwd
 echo "Running make:"
 make
 echo "Running make install:"
 make install
-
 
 if [[ "${WITH_SYMENGINE_RCP}" == "no" ]]; then
     echo "SymEngine successfully built with Teuchos::RCP. No tests being run."
@@ -132,7 +127,11 @@ else
     if [[ "${WITH_MPFR}" == "yes" ]] || [[ "${WITH_MPC}" == "yes" ]] || [[ "${WITH_ARB}" == "yes" ]]; then
         extra_libs="$extra_libs -lmpfr"
     fi
-    ${CXX} -std=c++0x -I$our_install_dir/include/ -I$SOURCE_DIR/symengine/catch -L$our_install_dir/lib test_basic.cpp -L$BUILD_DIR/symengine/catch -lcatch -lsymengine -lteuchos $extra_libs -lgmpxx -lgmp
+    if [[ "${TRAVIS_OS_NAME}" != "osx" ]] && [[ "${CC}" == *"clang"* ]]; then
+        ${CXX} -std=c++0x -stdlib=libc++ -I$our_install_dir/include/ -I$SOURCE_DIR/symengine/catch -L$our_install_dir/lib test_basic.cpp -L$BUILD_DIR/symengine/catch -lcatch -lsymengine -lteuchos $extra_libs -lgmpxx -lgmp
+    else
+        ${CXX} -std=c++0x -I$our_install_dir/include/ -I$SOURCE_DIR/symengine/catch -L$our_install_dir/lib test_basic.cpp -L$BUILD_DIR/symengine/catch -lcatch -lsymengine -lteuchos $extra_libs -lgmpxx -lgmp
+    fi
     export LD_LIBRARY_PATH=$our_install_dir/lib:$LD_LIBRARY_PATH
     ./a.out
     # Python
