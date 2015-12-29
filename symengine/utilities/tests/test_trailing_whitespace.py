@@ -74,9 +74,6 @@ def test(fname):
 
     with open(fname, "rt") as test_file:
         test_this_file(fname, test_file)
-
-    with open(fname, "rt") as test_file:
-        source = test_file.read()
 	
 def test_this_file(fname, test_file):
     line = None  # to flag the case where there were no lines in file
@@ -95,4 +92,5 @@ check_directory_tree(SYMENGINE_PATH, test, set(["/build/","/doc/","/cmake/","/ut
 print _report_failures()
 
 if len(report) != 0:
-    raise Exception('Trailing whitespaces present')
+    print 'Trailing whitespaces present'
+    exit(1)
