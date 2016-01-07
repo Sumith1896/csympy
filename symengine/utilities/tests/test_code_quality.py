@@ -7,6 +7,8 @@ import sys
 SYMENGINE_PATH = abspath(join(split(__file__)[0], pardir, pardir, pardir))
 assert exists(SYMENGINE_PATH)
 
+print 1
+
 class Check:
     """
     A class which defines a particular 'check'.
@@ -29,6 +31,8 @@ class Check:
 all_checks = []
 errors = False
 
+print 2
+
 # trailing whitespace check
 def trailing_whitespace_function(file_path):
     global errors
@@ -43,6 +47,7 @@ trailing_whitespace_check.excluded_names = ["/build/", "/doc/"]
 trailing_whitespace_check.included_filetypes = [".cpp", ".h", ".py", ".sh"]
 all_checks.append(trailing_whitespace_check)
 
+print 3
 # add another check below
 
 # Main
@@ -56,7 +61,14 @@ for check in all_checks:
                 if any(file_path.endswith(file_type) for file_type in check.included_filetypes):
                     check.fx(file_path)
 
+print 4
+
 if errors:
+    print 5
     print("Errors Listed above!")
     sys.exit(1)
+    print 6
+print 7
+print "errors"
+print errors
 sys.exit(0)
