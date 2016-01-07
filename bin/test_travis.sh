@@ -96,6 +96,7 @@ echo "Checking whether all header files are installed:"
 python $SOURCE_DIR/symengine/utilities/tests/test_make_install.py $our_install_dir/include/symengine/ $SOURCE_DIR/symengine
 
 if [[ "${TEST_CODE_QUALITY}" == "yes" ]]; then
+    python --version
     python $SOURCE_DIR/symengine/utilities/tests/test_code_quality.py
 fi
 

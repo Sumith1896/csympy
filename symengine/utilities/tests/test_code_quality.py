@@ -35,7 +35,7 @@ def trailing_whitespace_function(file_path):
     with open(file_path) as file_ptr:
         for line_num, line in enumerate(file_ptr):
             if line.endswith(" \n") or line.endswith("\t\n"):
-                print "Trailing whitespace :", file_path, str(line_num + 1)
+                print("Trailing whitespace :" + file_path + " " + str(line_num + 1))
                 errors = True
 
 trailing_whitespace_check = Check(trailing_whitespace_function, [SYMENGINE_PATH])
@@ -57,6 +57,6 @@ for check in all_checks:
                     check.fx(file_path)
 
 if errors:
-    print "Errors Listed above!"
+    print("Errors Listed above!")
     sys.exit(1)
 sys.exit(0)
