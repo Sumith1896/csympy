@@ -38,7 +38,7 @@ def trailing_whitespace_function(file_path):
     global errors
     with open(file_path) as file_ptr:
         for line_num, line in enumerate(file_ptr):
-            if line.endswith(" \n") or line.endswith("\t\n"):
+            if line.endswith(" ") or line.endswith("\t"):
                 print("Trailing whitespace :" + file_path + " " + str(line_num + 1))
                 errors = True
 
