@@ -97,6 +97,6 @@ python $SOURCE_DIR/symengine/utilities/tests/test_make_install.py $our_install_d
 
 if [[ "${TEST_CODE_QUALITY}" == "yes" ]]; then
     python --version
-    python $SOURCE_DIR/symengine/utilities/tests/test_code_quality.py
+    python3 $SOURCE_DIR/symengine/utilities/tests/test_code_quality.py
 fi
 
