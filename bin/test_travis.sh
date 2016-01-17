@@ -69,6 +69,13 @@ if [[ "${CC}" == "clang"* ]] && [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
 else
     CXXFLAGS="-Werror"
 fi
+
+if [[ "${CC}" == "clang"* ]] && [[ "${OVERFLOW_SANITIZE}" != "" ]]; then
+    CXXFLAGS="$CXXFLAGS -fsanitize"
+else
+    CXXFLAGS="$CXXFLAGS -ftrapv"
+fi
+
 cmake $cmake_line ${SOURCE_DIR}
 
 echo "Current directory:"
